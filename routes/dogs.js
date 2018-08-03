@@ -4,14 +4,16 @@ const express = require('express');
 const router = express();
 
 const dogDb = require('../db/dog-db.js');
+const {peek} = require('../models/queue.js');
 
 // GET (read) the first item in database
 router.get('/', (req, res, next) => {
-  if (dogDb[0]) {
-    res.json(dogDb[0]);
+  if (dogDb.first) {
+    const dog = peek(dogDb);
+    res.json(dog);
   } else {
     const err = new Error();
-    err.message = 'No dogs in database';
+    err.message = 'All dogs have a home!';
     err.status = 400;
     next(err);
   }
@@ -19,12 +21,12 @@ router.get('/', (req, res, next) => {
 
 // DELETE (remove) the first item in database
 router.delete('/', (req, res, next) => {
-  if (dogDb[0]) {
-    dogDb.shift();
+  if (dogDb.first) {
+    dogDb.dequeue();
     res.sendStatus(204).end();
   } else {
     const err = new Error();
-    err.message = 'No dogs in database';
+    err.message = 'All dogs have a home!';
     err.status = 400;
     next(err);
   }
