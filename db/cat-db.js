@@ -34,6 +34,8 @@ const data = [
 
 const catDb = new Queue();
 
-data.forEach(each => catDb.enqueue(each));
+for (let i = 0; i < 30; i++) {
+  data.forEach(each => catDb.enqueue(each));
+}
 
 module.exports = catDb;

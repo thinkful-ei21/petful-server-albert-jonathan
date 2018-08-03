@@ -34,6 +34,8 @@ const data = [
 
 const dogDb = new Queue();
 
-data.forEach(each => dogDb.enqueue(each));
+for (let i = 0; i < 30; i++) {
+  data.forEach(each => dogDb.enqueue(each));
+}
 
 module.exports = dogDb;
